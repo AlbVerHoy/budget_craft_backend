@@ -5,6 +5,7 @@ on:
       - master
 jobs:
   deploy:
+    environment: PROD
     name: Deploy app
     runs-on: ubuntu-latest
     concurrency: deploy-group
