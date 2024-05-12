@@ -13,7 +13,7 @@ from users.models import User
 
 
 class Auth0JWTBearerTokenValidator(JWTBearerTokenValidator):
-    def __init__(self, domain, client_id):
+    def __init__(self, audience, client_id, domain):
         issuer = f"https://{domain}/"
         audience = f"https://{domain}/userinfo"
         jsonurl = requests.get(f"{issuer}.well-known/jwks.json", timeout=10)
@@ -44,16 +44,13 @@ class Auth0JWTBearerTokenValidator(JWTBearerTokenValidator):
 class AuthBearer(HttpBearer):
     def authenticate(self, request, token):
         auth0_token_validator = Auth0JWTBearerTokenValidator(
-            domain=getenv("AUTH0_DOMAIN"),
+            audience=getenv("AUTH0_AUDIENCE"),
             client_id=getenv("AUTH0_CLIENT_ID"),
+            domain=getenv("AUTH0_DOMAIN"),
         )
-        try:
-            claims = auth0_token_validator.authenticate_token(token_string=token)
-            user = User.objects.filter(auth0_id=claims.get("sub")).first()
-            if not user:
-                return HttpResponse("Unauthorized", status=401)
-            if claims and user:
-                return token
-        except Exception as error:
-            print(error)
-            return None
+        claims = auth0_token_validator.authenticate_token(token_string=token)
+        user = User.objects.filter(auth0_id=claims.get("sub")).first()
+        if not user:
+            return HttpResponse("Unauthorized", status=401)
+        if claims and user:
+            return token
