@@ -32,7 +32,10 @@ SECRET_KEY = getenv(
 DEBUG = getenv("DEBUG") == "True"
 
 # ALLOWED_HOSTS = ["127.0.0.1", "localhost", "budget-craft-api.fly.dev", "localhost:5173"]
-# CSRF_TRUSTED_ORIGINS = ["https://budget-craft-api.fly.dev", "http://localhost:5173", "http://localhost"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173"
+]
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_METHODS = [
     "DELETE",
