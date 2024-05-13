@@ -31,9 +31,30 @@ SECRET_KEY = getenv(
 )
 DEBUG = getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "budget-craft-api.fly.dev"]
-CSRF_TRUSTED_ORIGINS = ["https://budget-craft-api.fly.dev"]
-
+# ALLOWED_HOSTS = ["127.0.0.1", "localhost", "budget-craft-api.fly.dev", "localhost:5173"]
+# CSRF_TRUSTED_ORIGINS = ["https://budget-craft-api.fly.dev", "http://localhost:5173", "http://localhost"]
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
+CORS_ALLOW_HEADERS = [
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "cache-control",
+    "pragma",
+]
 
 # Application definition
 
@@ -45,6 +66,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "corsheaders",
     "users",
     "expense_categories",
     "payment_methods",
@@ -60,6 +82,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "budget_craft_backend.urls"

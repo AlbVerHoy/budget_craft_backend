@@ -23,6 +23,11 @@ def list_users(request):
     return users
 
 
+@router.get("/me", response=UserOut)
+def get_me(request):
+    return get_object_or_404(User, id=request.current_user.id)
+
+
 @router.get("/{user_id}", response=UserOut)
 def get_user(request, user_id: uuid.UUID):
     user = get_object_or_404(User, id=user_id)
