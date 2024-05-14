@@ -31,12 +31,8 @@ SECRET_KEY = getenv(
 )
 DEBUG = getenv("DEBUG") == "True"
 
-ALLOWED_HOSTS = ["localhost:5173"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173"
-]
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 CORS_ALLOW_METHODS = [
     "DELETE",
     "GET",
@@ -44,19 +40,6 @@ CORS_ALLOW_METHODS = [
     "PATCH",
     "POST",
     "PUT",
-]
-CORS_ALLOW_HEADERS = [
-    "accept",
-    "accept-encoding",
-    "authorization",
-    "content-type",
-    "dnt",
-    "origin",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
-    "cache-control",
-    "pragma",
 ]
 
 # Application definition
@@ -80,13 +63,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "budget_craft_backend.urls"
