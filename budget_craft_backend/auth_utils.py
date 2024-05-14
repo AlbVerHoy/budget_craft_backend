@@ -53,4 +53,5 @@ class AuthBearer(HttpBearer):
         if not user:
             return HttpResponse("Unauthorized", status=401)
         if claims and user:
+            request.current_user = user
             return token
