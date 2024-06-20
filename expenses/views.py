@@ -3,17 +3,26 @@ import uuid
 from django.shortcuts import get_object_or_404
 from ninja import Router
 
+from expense_categories.models import ExpenseCategory
 from expenses.models import Expense
 from expenses.schemas import ExpenseIn
 from expenses.schemas import ExpenseOut
-
+from payment_methods.models import PaymentMethod
 
 router = Router()
 
 
 @router.post("/")
 def create_expense(request, payload: ExpenseIn):
-    expense = Expense.objects.create(**payload.dict())
+    payload_dict = payload.dict()
+    payload_dict["payment_method"] = PaymentMethod.objects.get(
+        id=payload_dict["payment_method_id"]
+    )
+    payload_dict["expense_category"] = ExpenseCategory.objects.get(
+        id=payload_dict["category_id"]
+    )
+
+    expense = Expense.objects.create(**payload_dict)
     return {"id": expense.id}
 
 
