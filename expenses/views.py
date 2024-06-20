@@ -17,12 +17,10 @@ router = Router()
 def create_expense(request, payload: ExpenseIn):
     payload_dict = payload.dict()
     payload_dict["payment_method"] = PaymentMethod.objects.get(
-        id=payload_dict["payment_method_id"]
+        id=payload_dict["payment_method"]
     )
-    payload_dict["category"] = ExpenseCategory.objects.get(
-        id=payload_dict["category_id"]
-    )
-    payload_dict["user"] = User.objects.get(id=payload_dict["user_id"])
+    payload_dict["category"] = ExpenseCategory.objects.get(id=payload_dict["category"])
+    payload_dict["user"] = User.objects.get(id=payload_dict["user"])
 
     expense = Expense.objects.create(**payload_dict)
     return {"id": expense.id}

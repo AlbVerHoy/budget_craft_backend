@@ -33,7 +33,7 @@ DEBUG = getenv("DEBUG") == "True"
 
 # CORS configuration
 
-ALLOWED_HOSTS = ["budget-craft-api.fly.dev", "localhost"]
+ALLOWED_HOSTS = ["budget-craft-api.fly.dev", "localhost", "127.0.0.1"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173/"]
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 CORS_ALLOW_METHODS = [
@@ -154,6 +154,8 @@ STORAGES = {
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATIC_URL = "static/"
+
+APPEND_SLASH = False
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
