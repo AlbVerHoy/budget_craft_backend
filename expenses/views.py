@@ -20,7 +20,7 @@ def create_expense(request, payload: ExpenseIn):
         id=payload_dict["payment_method"]
     )
     payload_dict["category"] = ExpenseCategory.objects.get(id=payload_dict["category"])
-    payload_dict["user"] = User.objects.get(request.current_user.id)
+    payload_dict["user"] = User.objects.get(id=request.current_user.id)
 
     expense = Expense.objects.create(**payload_dict)
     return {"id": expense.id}
