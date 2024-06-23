@@ -26,9 +26,3 @@ def get_me(request):
 def get_user(request, user_id: uuid.UUID):
     user = get_object_or_404(User, id=user_id)
     return user
-
-
-@router.get("/{user_id}/expenses", response=UserOut)
-def get_user_expenses(request, user_id: uuid.UUID):
-    user = get_object_or_404(Expense, user_id=user_id)
-    return user

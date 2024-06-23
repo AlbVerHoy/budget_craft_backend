@@ -15,7 +15,6 @@ from users.models import User
 class Auth0JWTBearerTokenValidator(JWTBearerTokenValidator):
     def __init__(self, audience, client_id, domain):
         issuer = f"https://{domain}/"
-        audience = f"https://{domain}/userinfo"
         jsonurl = requests.get(f"{issuer}.well-known/jwks.json", timeout=10)
         public_key = JsonWebKey.import_key_set(jsonurl.json())
         super(Auth0JWTBearerTokenValidator, self).__init__(public_key)
