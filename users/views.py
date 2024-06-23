@@ -11,7 +11,7 @@ from users.schemas import UserOut
 router = Router()
 
 
-@router.get("/", response=list[UserOut])
+@router.get("", response=list[UserOut])
 def list_users(request):
     users = User.objects.all()
     return users

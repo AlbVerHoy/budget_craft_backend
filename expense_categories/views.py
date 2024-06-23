@@ -10,13 +10,13 @@ from expense_categories.schemas import ExpenseCategoryOut
 router = Router()
 
 
-@router.post("/")
+@router.post("")
 def create_expense_category(request, payload: ExpenseCategoryIn):
     expense_category = ExpenseCategory.objects.create(**payload.dict())
     return {"id": expense_category.id}
 
 
-@router.get("/", response=list[ExpenseCategoryOut])
+@router.get("", response=list[ExpenseCategoryOut])
 def list_expense_categories(request):
     expense_categories = ExpenseCategory.objects.all()
     return expense_categories

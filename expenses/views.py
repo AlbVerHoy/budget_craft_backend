@@ -12,7 +12,7 @@ from payment_methods.models import PaymentMethod
 router = Router()
 
 
-@router.post("/")
+@router.post("")
 def create_expense(request, payload: ExpenseIn):
     payload_dict = payload.dict()
     payload_dict["payment_method"] = PaymentMethod.objects.get(
@@ -25,7 +25,7 @@ def create_expense(request, payload: ExpenseIn):
     return {"id": expense.id}
 
 
-@router.get("/", response=list[ExpenseOut], by_alias=True)
+@router.get("", response=list[ExpenseOut], by_alias=True)
 def list_expenses(request):
     expenses = Expense.objects.all()
     return expenses
