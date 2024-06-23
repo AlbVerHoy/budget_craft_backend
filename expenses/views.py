@@ -8,6 +8,7 @@ from expenses.models import Expense
 from expenses.schemas import ExpenseIn
 from expenses.schemas import ExpenseOut
 from payment_methods.models import PaymentMethod
+from users.models import User
 
 router = Router()
 
@@ -19,7 +20,7 @@ def create_expense(request, payload: ExpenseIn):
         id=payload_dict["payment_method"]
     )
     payload_dict["category"] = ExpenseCategory.objects.get(id=payload_dict["category"])
-    payload_dict["user"] = request.current_user.id
+    payload_dict["user"] = User.objects.get(request.current_user.id)
 
     expense = Expense.objects.create(**payload_dict)
     return {"id": expense.id}
